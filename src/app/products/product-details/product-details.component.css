@@ -1,0 +1,7 @@
+.conainer-details {
+    min-height: 450px;
+    background-color: rgba(0, 0, 0, .030);
+    padding: 20px;
+    border-radius: 3px;
+    margin: 5px 0;
+}

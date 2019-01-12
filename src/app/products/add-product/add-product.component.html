@@ -1,0 +1,113 @@
+<div class="panel">
+    <div class="panel-heading bg-info">
+        Add Product
+    </div>
+    <div class="panel-body pt-4">
+        <form [formGroup]="firstForm" (ngSubmit)="submit()" autocomplete="nope" class="pb-5">
+            <div [ngClass]="{'form-group': true,'input-err': firstForm.get('username').errors && firstForm.get('username').touched}">
+                <label for="exampleInputname1">Username</label>
+                <input formControlName="username" type="text" class="form-control" id="exampleInputname1" placeholder="Enter Username">
+                <span class="msg-err" *ngIf="firstForm.get('username').touched && firstForm.get('username').errors?.required">Username is Required</span>
+                <span class="msg-err" *ngIf="firstForm.get('username').touched && firstForm.get('username').errors?.minlength">Username Must be More Than 5 charcter</span>
+            </div>
+            <div [ngClass]="{'form-group': true,'input-err': emailMessagesErrors }">
+                <label for="exampleInputEmail1">Email address</label>
+                <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                <span>{{ emailMessagesErrors }}</span>
+            </div>
+            <div formGroupName="pass">
+                <div [ngClass]="{'form-group': true,'input-err': firstForm.get('pass.password').errors
+                                                                && (firstForm.get('pass.password').dirty || firstForm.get('pass.password').touched)}">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input formControlName="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    <span class="msg-err" *ngIf="(firstForm.get('pass.password').dirty || firstForm.get('pass.password').touched) && firstForm.get('pass.password').errors?.required">Password is Required</span>
+                    <span class="msg-err" *ngIf="(firstForm.get('pass.password').dirty || firstForm.get('pass.password').touched) && firstForm.get('pass.password').errors?.minlength">Password Must be More Than 6 charcter</span>
+                </div>
+                <div [ngClass]="{'form-group': true,'input-err': (firstForm.get('pass.confirmPassword').errors 
+                                                                && firstForm.get('pass.confirmPassword').touched)
+                                                                || firstForm.get('pass').errors}">
+                    <label for="exampleInputConfirmPassword1">Confirm Password</label>
+                    <input formControlName="confirmPassword" type="password" class="form-control" id="exampleInputConfirmPassword1" placeholder="Confirm Password">
+                    <span class="msg-err" *ngIf="firstForm.get('pass.confirmPassword').touched && firstForm.get('pass.confirmPassword').errors?.required">Confirm Password is Required</span>
+                    <span class="msg-err" *ngIf="firstForm.get('pass.confirmPassword').touched && firstForm.get('pass').errors?.match">Confirm Password Must be Match Password</span>
+                </div>
+            </div>
+            <div [ngClass]="{'form-group': true,'input-err': firstForm.get('phone').errors && firstForm.get('phone').touched}">
+                <label for="exampleInputPhone1">Phone</label>
+                <input formControlName="phone" type="tel" class="form-control" id="exampleInputPhone1" placeholder="Phone">
+                <span class="msg-err" *ngIf="firstForm.get('phone').touched && firstForm.get('phone').errors?.required">Phone is Required</span>
+            </div>
+            <div [ngClass]="{'form-group': true}">
+                <label for="exampleInputPhone1" class="font-weight-bold mr-5">Send Notifications</label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" formControlName="sendNotifications" name="sendNotifications" type="radio" id="inlineCheckbox1" value="email">
+                    <label class="form-check-label" for="inlineCheckbox1">Email</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" formControlName="sendNotifications" name="sendNotifications" type="radio" id="inlineCheckbox2" value="text">
+                    <label class="form-check-label" for="inlineCheckbox2">Text</label>
+                </div>
+            </div>
+            <div [ngClass]="{'form-group': true,'input-err': firstForm.get('rating').errors && firstForm.get('rating').touched}">
+                <label for="exampleInputRange1">Rating</label>
+                <input formControlName="rating" type="number" class="form-control" id="exampleInputRange1" placeholder="rating">
+                <span class="msg-err" *ngIf="firstForm.get('rating').touched && firstForm.get('rating').errors?.range">Please rate Your Experience from 1 to 5</span>
+            </div>
+            <div class="form-check form-check-inline col-sm-12">
+                <input class="form-check-input" formControlName="sendCatalog" name="sendCatalog" type="checkbox" id="sendCatalog">
+                <label class="form-check-label" for="sendCatalog">Send Me Your Catalog</label>
+            </div>
+            <div *ngIf="firstForm.controls.sendCatalog.value">
+                <div>
+                    <button (click)="addAddress()" [disabled]="!extraInfo.valid" type="button" class="btn btn-sm btn-primary mt-3">Add Another Address</button>
+                </div>
+                <div formArrayName="extraInfo" *ngFor="let adrress of extraInfo.controls; let i=index" class="mt-2">
+                    <div [formGroupName]="i">
+                        <div [ngClass]="{'form-group': true}">
+                            <label class="font-weight-bold mr-5">Address Type</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" formControlName="addressType" name="addressType" type="radio" id="{{ 'adrressType1' + i }}" value="home">
+                                <label class="form-check-label" attr.for="{{ 'adrressType1' + i }}">Home</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" formControlName="addressType" name="addressType" type="radio" id="{{ 'adrressType2' + i }}" value="work">
+                                <label class="form-check-label" attr.for="{{ 'adrressType2' + i }}">Work</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" formControlName="addressType" name="addressType" type="radio" id="{{ 'adrressType3' + i }}" value="other">
+                                <label class="form-check-label" attr.for="{{ 'adrressType3' + i }}">Other</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label attr.for="{{ 'streetAddress1' + i }}">Street Address 1</label>
+                            <input formControlName="streetAddress1" name="streetAddress1" type="text" class="form-control" id="{{ 'streetAddress1' + i }}">
+                        </div>
+                        <div class="form-group">
+                            <label attr.for="{{ 'streetAddress2' + i }}">Street Address 2</label>
+                            <input formControlName="streetAddress2" name="streetAddress2" type="text" class="form-control" id="{{ 'streetAddress2' + i }}">
+                        </div>
+                        <div class="form-group">
+                            <label>City, Status, Zip Code</label>
+                            <div class="row">
+                                <div class="col">
+                                    <input formControlName="city" name="city" type="text" class="form-control" placeholder="City">
+                                </div>
+                                <div class="col">
+                                    <input formControlName="status" name="status" type="text" class="form-control" placeholder="Work">
+                                </div>
+                                <div class="col">
+                                    <input formControlName="zipCode" name="zipCode" type="number" class="form-control" placeholder="Other">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-3">
+                <button type="submit" class="btn btn-sm btn-info">Submit</button>
+                <button type="button" (click)="testData()" class="btn btn-primary btn-sm">Test Data</button>
+                <button type="button" (click)="resetForm()" class="btn btn-sm btn-warning">Reset Form</button>
+            </div>
+        </form>
+    </div>
+</div>

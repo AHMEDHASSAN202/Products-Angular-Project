@@ -1,0 +1,27 @@
+.panel {
+    margin-top: 20px;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.panel-heading {
+    padding: 10px;
+    padding-left: 5px;
+    color: #fff;
+    font-size: 22px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.f {
+    margin: 20px 0 30px;
+}
+
+td {
+    vertical-align: inherit;
+    height: 65px;
+}
+
+.p-img {
+    height: 40px;
+    width: 40px;
+}

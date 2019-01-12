@@ -1,0 +1,52 @@
+<div class="container">
+    <div>
+        <div class="panel">
+            <div class="panel-heading bg-info">
+                <div class="panel-title">
+                    {{ title_panel }}
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row f">
+                    <div class="col-md-2">
+                        Filter by:
+                    </div>
+                    <div class="col-md-8">
+                        <input [(ngModel)]="listFilter" type="text" class="col-md-5 form-control">
+                    </div>
+                </div>
+                <div class="row f">
+                    <div class="col-md-12">
+                        <h5>Filter by: </h5>
+                    </div>
+                </div>
+                <table *ngIf="products && products.length" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                <button (click)="show = !show" class="btn btn-sm btn-info">{{ show ? 'Hide' : 'Show' }} Image</button>
+                            </th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Code</th>
+                            <th scope="col">Avalibale</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">5 Star Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let product of filterdProducts">
+                            <td><img *ngIf="show" class="p-img img-thumbnail" [src]="product.imageUrl"></td>
+                            <td style="cursor: pointer" (click)="redirectDetails(product.productId)">{{ product.productName }}</td>
+                            <td>{{ product.productCode | lowercase | convertToSpaces:'-' }}</td>
+                            <td>{{ product.releaseDate }}</td>
+                            <td>{{ product.price }}</td>
+                            <td>
+                                <rating-star (ratingClicked)="onRatingClicked($event)" [rating]="product.starRating"></rating-star>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

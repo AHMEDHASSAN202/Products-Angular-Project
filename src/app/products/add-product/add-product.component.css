@@ -1,0 +1,30 @@
+.panel {
+    margin-top: 20px;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.panel-heading {
+    padding: 10px;
+    padding-left: 5px;
+    color: #fff;
+    font-size: 22px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.btn-warning {
+    color: #fff !important;
+}
+
+.input-err>label {
+    color: red;
+}
+
+.input-err>input {
+    border-color: red !important;
+}
+
+.input-err>.msg-err,
+.input-err>span {
+    color: red;
+}
